@@ -69,14 +69,15 @@ describe(__filename, () => {
       'count',
       'filters',
       'loading',
+      'paginator',
       'pathname',
       'results',
     ].sort());
   });
 
-  it('renders a Paginate', () => {
+  it('passes a Paginate component to the SearchResults component', () => {
     const root = render();
-    const paginator = root.find(Paginate);
+    const paginator = root.find(SearchResults).prop('paginator');
     expect(paginator.prop('count')).toEqual(80);
     expect(paginator.prop('currentPage')).toEqual(3);
     expect(paginator.prop('pathname')).toEqual('/search/');
@@ -89,9 +90,7 @@ describe(__filename, () => {
       filters: { query: null },
     });
     const root = render(mapStateToProps(store.getState()));
-    const paginators = root.find(Paginate);
-
-    expect(paginators.length).toEqual(0);
+    expect(root.find(SearchResults).prop('paginator')).toHaveLength(0);
   });
 
   it('renders SearchFilters when there are filters and results', () => {
